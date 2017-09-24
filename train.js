@@ -16,12 +16,12 @@ var config = {
   var minutesAway = 0;
 
 
-$("#add-train-button").on("click", function(event){
+$("#add-train-btn").on("click", function(event){
 	event.preventDefault();
 
 	trainName = $("#train-name-input").val().trim();
-	destination = $("#destination").val().trim();
-	frequency = $("#frequency").val().trim();
+	destination = $("#destination-input").val().trim();
+	frequency = $("#frequency-input").val().trim();
 
 	var newTrain = {
 		name: trainName,
@@ -31,10 +31,20 @@ $("#add-train-button").on("click", function(event){
 
 	console.log(newTrain);
 
-	database.ref().push(newTrain);
+	firebase.database().ref().push(newTrain);
 
 	$("#trainName").empty();
 	$("#destination").empty();
 	$("#frequency").empty();
 });
 
+firebase.database().ref().on("child_added", function(childSnapshot){
+	console.log(childSnapshot);
+
+	var trainName = childSnapshot.val().name;
+	var destination = childSnapshot.val().trainDestination;
+	var frequency = childSnapshot.val().trainFrequency;
+
+	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td></tr>");
+
+})
