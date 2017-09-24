@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -17,6 +18,7 @@
 		<div class="jumbotron">
 		  <h1>Train Schedule</h1>
 		  <p><a class="btn btn-primary btn-lg" href="#" role="button" id="refresh-button">Refresh Schedules</a></p>
+		  <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0xNzAuNjY3LDM2Mi42NjdjLTExLjc3NiwwLTIxLjMzMyw5LjU1Ny0yMS4zMzMsMjEuMzMzczkuNTU3LDIxLjMzMywyMS4zMzMsMjEuMzMzUzE5MiwzOTUuNzc2LDE5MiwzODQgICAgIFMxODIuNDQzLDM2Mi42NjcsMTcwLjY2NywzNjIuNjY3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzUyLDM4NGMtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3M0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3ICAgICBTMzU3Ljg4OCwzODQsMzUyLDM4NHoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTQ5MS4wOTMsMzg0LjAyMkM1MDMuODkzLDM2NC45MDcsNTEyLDMzNC41NSw1MTIsMjk4LjY2N0M1MTIsMjM3Ljg0Niw0ODkuMDY3LDE5Miw0NTguNjY3LDE5MmgtNy42OGwxOC4wMjctNzIuMDg1ICAgICBjMC4yMTMtMC44NTMsMC4zMi0xLjcwNywwLjMyLTIuNTgxVjc0LjY2N2MwLTE3LjY0My0xNC4zNTctMzItMzItMzJoLTQyLjY2N2MtMTcuNjQzLDAtMzIsMTQuMzU3LTMyLDMydjQyLjY2NyAgICAgYzAsMC44NzUsMC4xMDcsMS43NDksMC4zMiwyLjU4MUwzODEuMDEzLDE5MmgtMzkuNjh2LTMyYzAtMTcuNjQzLTE0LjM1Ny0zMi0zMi0zMmMtMTcuNjQzLDAtMzIsMTQuMzU3LTMyLDMydjMyaC00Mi42Njd2LTg1LjMzMyAgICAgaDEwLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3Vjc0LjY2N2MwLTE3LjY0My0xNC4zNTctMzItMzItMzJINTMuMzMzYy0xNy42NDMsMC0zMiwxNC4zNTctMzIsMzJWOTYgICAgIGMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3aDEwLjY2N3YxOTJIMjEuMzMzVjI4OGMwLTUuODg4LTQuNzc5LTEwLjY2Ny0xMC42NjctMTAuNjY3UzAsMjgyLjExMiwwLDI4OHY4NS4zMzMgICAgIEMwLDM3OS4yMjIsNC43NzksMzg0LDEwLjY2NywzODRzMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42Njd2LTEwLjY2N2gyMi40MjFjNC4zOTUsMjEuNTA0LDIxLjkwOSwzOC4xODcsNDQuMzUyLDQxLjc5MiAgICAgYzkuMjE2LDM3LjE0MSw0Mi42MDMsNjQuODc1LDgyLjU2LDY0Ljg3NWMzOS42MzcsMCw3Mi43NjgtMjcuMzA3LDgyLjMwNC02NGgyNS40NTFjNS4yMjcsMzYuMDk2LDM2LjA3NSw2NCw3My41NzksNjQgICAgIGMzMS41MzEsMCw1OC40MTEtMTkuNzEyLDY5LjM1NS00Ny40MjRsNC43NzksNy4xNjhjMTYuNzg5LDI1LjE5NSw0NC45MDcsNDAuMjU2LDc1LjIsNDAuMjU2YzMuMzQ5LDAsNi41MDctMS41NzksOC41MTItNC4yNDUgICAgIGMyLjAwNS0yLjY2NywyLjY2Ny02LjE0NCwxLjc0OS05LjM0NEw0OTEuMDkzLDM4NC4wMjJ6IE04NS4zMzMsMjI0di04NS4zMzNDODUuMzMzLDEzMi43NzksOTAuMTEyLDEyOCw5NiwxMjhoODUuMzMzICAgICBjNS44ODgsMCwxMC42NjcsNC43NzksMTAuNjY3LDEwLjY2N1YyMjRjMCw1Ljg4OC00Ljc3OSwxMC42NjctMTAuNjY3LDEwLjY2N0g5NkM5MC4xMTIsMjM0LjY2Nyw4NS4zMzMsMjI5Ljg4OCw4NS4zMzMsMjI0eiAgICAgIE0yMzMuODU2LDM5Mi4wNDNjLTAuMDY0LDAuNDA1LTAuMDg1LDAuNzA0LTAuMTQ5LDEuMTMxYy0wLjAyMSwwLjA4NSwwLjAyMSwwLjE3MSwwLjAyMSwwLjIzNSAgICAgQzIyOS4xMiw0MjQuMjE0LDIwMi43MzEsNDQ4LDE3MC42NjcsNDQ4Yy0zMS4yMTEsMC01Ny4xNzMtMjIuNDg1LTYyLjc4NC01Mi4wNzVjMC4wNjQtMC40MjcsMC4yOTktMC44MTEsMC4yOTktMS4yNTkgICAgIGMwLTEuMzAxLTAuMzYzLTIuNDk2LTAuNzg5LTMuNjQ4Yy0wLjI3Ny0yLjMyNS0wLjcyNS00LjYwOC0wLjcyNS03LjAxOWMwLTM1LjI4NSwyOC43MTUtNjQsNjQtNjRzNjQsMjguNzE1LDY0LDY0ICAgICBDMjM0LjY2NywzODYuNzUyLDIzNC4xOTcsMzg5LjM3NiwyMzMuODU2LDM5Mi4wNDN6IE0zNTIsNDQ4Yy0yOS4zOTcsMC01My4zMzMtMjMuOTM2LTUzLjMzMy01My4zMzNzMjMuOTM2LTUzLjMzMyw1My4zMzMtNTMuMzMzICAgICBzNTMuMzMzLDIzLjkzNiw1My4zMzMsNTMuMzMzUzM4MS4zOTcsNDQ4LDM1Miw0NDh6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" class="animated infinite pulse"/>
 		</div>
 
       	<div class="row">
@@ -34,7 +36,7 @@
 	                  <tr>
 	                    <th>Train Name</th>
 	                    <th>Destination</th>
-	                    <th>Frequency</th>
+	                    <th>Frequency (Minutes)</th>
 	                    <th>Next Arrival</th>
 	                    <th>Minutes Away</th>
 	                  </tr>
@@ -63,7 +65,11 @@
 	                  <input class="form-control" id="destination-input" type="text">
 	                </div>
 	                <div class="form-group">
-	                  <label for="frequency-input">Frequency (minutes)</label>
+	                  <label for="first-train-input">First Train (HH:MM Military Time)</label>
+	                  <input class="form-control" id="first-train-input" type="text">
+	                </div>
+	                <div class="form-group">
+	                  <label for="frequency-input">Frequency (Minutes)</label>
 	                  <input class="form-control" id="frequency-input" type="text">
 	                </div>
 	                <button class="btn btn-primary" id="add-train-btn" type="submit">Submit</button>
@@ -74,6 +80,9 @@
          </div>
 
 	</section>
+	<footer>
+		<div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+	</footer>
 	
  	<script type="text/javascript" src="train.js"></script>
 
