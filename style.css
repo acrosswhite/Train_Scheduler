@@ -1,0 +1,21 @@
+.jumbotron {
+	background-color: #7986cb;
+	color: white;
+	text-align: center;
+
+}
+
+#refresh-button,
+#add-train-btn {
+	background-color: #283593;
+	color: white;
+	border-color: #283593;
+}
+
+#table-heading,
+#trains-heading {
+	background-color: #283593;
+	color: white;
+	border-color: #283593;
+	border-color: #283593;
+}
