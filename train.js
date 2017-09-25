@@ -58,7 +58,7 @@ firebase.database().ref().on("child_added", function(childSnapshot){
 	var minutesToTrainArrival = childSnapshot.val().minutesToArrival;
 
 	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
-	 + "</td><td>" + nextArrivalOfTrain + "</td><td>" + minutesToTrainArrival + "</td></tr>");
+	 + "</td><td class='arrival'>" + nextArrivalOfTrain + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
 
 });
 
@@ -95,10 +95,27 @@ function timeConverter (){
 	minutesAway = frequency - remainder;
 	nextArrival = moment().add(minutesAway, "minutes");
 	nextArrivalformatted = moment(nextArrival).format("HH:mm");
+	console.log(nextArrivalformatted);
 };
 
+$("#refresh-button").on("click", function(){
+	currentTimeMilitary();
+	timeConverter();
+	$(".minutes").empty();
+	$(".arrival").empty();
+	$("#train-table > tbody").append("<td>" + nextArrivalformatted + "</td>");
+	$("#train-table > tbody").append("<td>" + minutesAway + "</td>");
+});
+
+setTimeout (function (){
+	currentTimeMilitary();
+	timeConverter();
+
+	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
+	 + "</td><td class='arrival'>" + nextArrivalformatted + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
 
 
+}, 60000);
 
 
 

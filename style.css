@@ -1,13 +1,15 @@
+#background-pic {
+	background-image: url("./la-me-california-commute-20150127.jpg");
+}
+
 footer {
 	text-align: center;
 	color: black;
 }
 
 
-
-
 .jumbotron {
-	background-color: #7986cb;
+	background-color: #b6ced4;
 	color: white;
 	text-align: center;
 
@@ -15,15 +17,15 @@ footer {
 
 #refresh-button,
 #add-train-btn {
-	background-color: #283593;
+	background-color: #31708f;
 	color: white;
-	border-color: #283593;
+	border-color: #31708f;
 }
 
 #table-heading,
 #trains-heading {
-	background-color: #283593;
+	background-color: #31708f;
 	color: white;
-	border-color: #283593;
-	border-color: #283593;
+	border-color: #31708f;
+	
 }
