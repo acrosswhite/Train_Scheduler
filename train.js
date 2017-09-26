@@ -13,7 +13,7 @@ var config = {
   var frequency = "";
   var firstTrain = "";
   var currentTime = moment();
-  var nextArrival = 0s;
+  var nextArrival = 0;
   var minutesAway = 0;
   var nextArrivalformatted = "";
   var trains = [];
@@ -58,6 +58,7 @@ firebase.database().ref().on("child_added", function(childSnapshot){
 	var startTime = childSnapshot.val().trainStart;
 	var nextArrivalOfTrain = timeChange(startTime, frequency).nextTrain;
 	var minutesToTrainArrival = timeChange(startTime, frequency).minutesAway;
+	trains.push(childSnapshot.val());
 
 	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
 	 + "</td><td class='arrival'>" + nextArrivalOfTrain + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
@@ -99,18 +100,17 @@ function timeChange (startTime, frequency){
 
 $("#refresh-button").on("click", function(){
 
-	$("train-table > tbody").empty();
+	$("#train-table > tbody").empty();
 
-	for (var i = 0; i < Things.length; i++) {
-		Things[i]
+	for (var i = 0; i < trains.length; i++) {
+		var tableRow = trains[i];
+		console.log(tableRow)
 
 	
-	$("#train-table > tbody").append("<th>" + "Train Name" + "</th><th>" + "Destination"
-		+ "</th><th>" + "Frequency" + "</th><th>" + "Next Arrival" + "</th><th>" +
-		"Minutes Away" + "</th><tr><td>" + trainName + "</td><td>" + destination + 
-		"</td><td>" + frequency
-	   + "</td><td class='arrival'>" + timeChange(startTime, frequency).nextTrain + 
-	   "</td><td class='minutes'>" + timeChange(startTime, frequency).minutesAway + 
+	$("#train-table > tbody").append("<tr><td>" + tableRow.name + "</td><td>" + tableRow.trainDestination + 
+		"</td><td>" + tableRow.trainFrequency
+	   + "</td><td class='arrival'>" + timeChange(tableRow.trainStart, tableRow.trainFrequency).nextTrain + 
+	   "</td><td class='minutes'>" + timeChange(tableRow.trainStart, tableRow.trainFrequency).minutesAway + 
 	   "</td></tr>");
 	};
 
