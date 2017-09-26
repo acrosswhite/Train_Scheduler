@@ -13,9 +13,10 @@ var config = {
   var frequency = "";
   var firstTrain = "";
   var currentTime = moment();
-  var nextArrival = 0;
+  var nextArrival = 0s;
   var minutesAway = 0;
   var nextArrivalformatted = "";
+  var trains = [];
 
 
 $("#add-train-btn").on("click", function(event){
@@ -26,7 +27,7 @@ $("#add-train-btn").on("click", function(event){
 	frequency = $("#frequency-input").val().trim();
 	firstTrain = $("#first-train-input").val().trim();
 
-	timeConverter ();
+
 
 	var newTrain = {
 		name: trainName,
@@ -54,41 +55,18 @@ firebase.database().ref().on("child_added", function(childSnapshot){
 	var trainName = childSnapshot.val().name;
 	var destination = childSnapshot.val().trainDestination;
 	var frequency = childSnapshot.val().trainFrequency;
-	var nextArrivalOfTrain = childSnapshot.val().nextTrain;
-	var minutesToTrainArrival = childSnapshot.val().minutesToArrival;
+	var startTime = childSnapshot.val().trainStart;
+	var nextArrivalOfTrain = timeChange(startTime, frequency).nextTrain;
+	var minutesToTrainArrival = timeChange(startTime, frequency).minutesAway;
 
 	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
 	 + "</td><td class='arrival'>" + nextArrivalOfTrain + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
 
 });
 
-//find current time and parse to military time
-var currentTimeMilitary = function (){
-	console.log(currentTime);
-	return moment().format("HH:MM");
-};
-
-//function secondsSince (){
-	//difference between current time and some past time value
-	//var currentTimeDuration = moment.duration(currentTimeMilitary());
-	//var timetableDuration = moment.duration("10:00");
 
 
-	//var difference = timetableDuration.subtract(currentTimeDuration);
-	//return moment.utc(difference.asMinutes()).format("HH:MM");
-
-
-//};
-
-//calculate the first train time * frequency of the train
-
-//for each train on each day loop through the timetable 
-// if time = time then train arrived and minutes remaining is 0
-//if time (c) > timetable train is gone 
-//if time (c) < timetable train is arriving in ct - tt minutes (break loop here)
-//update this to html
-
-function timeConverter (){
+/*function timeConverter (){
 	var firstTrainTimeConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
 	var difference = moment().diff(moment(firstTrainTimeConverted), "minutes");
 	var remainder = difference % frequency;
@@ -96,29 +74,56 @@ function timeConverter (){
 	nextArrival = moment().add(minutesAway, "minutes");
 	nextArrivalformatted = moment(nextArrival).format("HH:mm");
 	console.log(nextArrivalformatted);
-};
+	return {
+		na: nextArrivalformatted,
+		ma: minutesAway
+	};
+};*/
+
+function timeChange (startTime, frequency){
+	var startTimeMoment = moment(startTime, "HH:mm");
+	var currentTime = moment();
+	while (startTimeMoment.isBefore(currentTime)){
+		startTimeMoment = startTimeMoment.add(frequency, "minutes");
+	}
+
+	var difference = startTimeMoment.diff(moment(), "minutes");
+	//var remainder = difference % freequency;
+	//minutesAway = frequency - remainder;
+	//nextArrival = moment().add(minutesAway, "minutes");
+		return {
+			nextTrain: startTimeMoment.format("HH:mm"),
+			minutesAway: difference
+		}
+}
 
 $("#refresh-button").on("click", function(){
-	currentTimeMilitary();
-	timeConverter();
-	$(".minutes").empty();
-	$(".arrival").empty();
-	$("#train-table > tbody").append("<td>" + nextArrivalformatted + "</td>");
-	$("#train-table > tbody").append("<td>" + minutesAway + "</td>");
-});
 
-setTimeout (function (){
-	currentTimeMilitary();
-	timeConverter();
+	$("train-table > tbody").empty();
+
+	for (var i = 0; i < Things.length; i++) {
+		Things[i]
+
+	
+	$("#train-table > tbody").append("<th>" + "Train Name" + "</th><th>" + "Destination"
+		+ "</th><th>" + "Frequency" + "</th><th>" + "Next Arrival" + "</th><th>" +
+		"Minutes Away" + "</th><tr><td>" + trainName + "</td><td>" + destination + 
+		"</td><td>" + frequency
+	   + "</td><td class='arrival'>" + timeChange(startTime, frequency).nextTrain + 
+	   "</td><td class='minutes'>" + timeChange(startTime, frequency).minutesAway + 
+	   "</td></tr>");
+	};
+
+});
+/*
+setTimeout (timeChange(startTime, frequency)){
+
 
 	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
 	 + "</td><td class='arrival'>" + nextArrivalformatted + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
 
 
-}, 60000);
+}, 60000);*/
 
 
 
-
-
-//use settimeout to refresh the time pages
