@@ -12,6 +12,7 @@ footer {
 	background-color: #b6ced4;
 	color: white;
 	text-align: center;
+	background: rgba(182, 206, 212, 0.3)
 
 }
 
@@ -27,5 +28,19 @@ footer {
 	background-color: #31708f;
 	color: white;
 	border-color: #31708f;
+	font-size: 16px;
 	
+}
+
+#train-panel,
+#add-train-panel {
+	background: rgba(182, 206, 212, 0.3);
+	font-size: 16px;
+	color: white;
+}
+
+
+#train-panel:hover {
+	background-color: rgba(182, 206, 212, 0.5);
+	color: black;
 }
