@@ -115,15 +115,24 @@ $("#refresh-button").on("click", function(){
 	};
 
 });
-/*
-setTimeout (timeChange(startTime, frequency)){
 
+setTimeout (function (){
 
-	$("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency
-	 + "</td><td class='arrival'>" + nextArrivalformatted + "</td><td class='minutes'>" + minutesToTrainArrival + "</td></tr>");
+	$("#train-table > tbody").empty();
 
+	for (var i = 0; i < trains.length; i++) {
+		var tableRow = trains[i];
+		console.log(tableRow)
 
-}, 60000);*/
+	
+	$("#train-table > tbody").append("<tr><td>" + tableRow.name + "</td><td>" + tableRow.trainDestination + 
+		"</td><td>" + tableRow.trainFrequency
+	   + "</td><td class='arrival'>" + timeChange(tableRow.trainStart, tableRow.trainFrequency).nextTrain + 
+	   "</td><td class='minutes'>" + timeChange(tableRow.trainStart, tableRow.trainFrequency).minutesAway + 
+	   "</td></tr>");
+	};
+
+}, 60000);
 
 
 
