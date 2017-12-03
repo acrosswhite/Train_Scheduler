@@ -7,5 +7,5 @@ The times are calculated based on current time.
 
 # Setup 
 
-I used Firebase to store data, GitHub to backup your project, and GithHub Pages to host your finished site.
+I used Firebase to store data, GitHub to backup the project, and GithHub Pages to host my finished site.
 
